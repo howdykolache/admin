@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "JosefinSans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/fonts/JosefinSans-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "JosefinSans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/JosefinSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "JosefinSans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/JosefinSans-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "JosefinSans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/JosefinSans-Bold.ttf") format("truetype");
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "JosefinSans", sans-serif;
+}
+
+#__nuxt {
+  height: 100%;
+}
