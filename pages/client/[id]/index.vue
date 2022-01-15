@@ -10,19 +10,8 @@ const { data: client } = await useFetch(
 const { data: products } = await useFetch(
   `/api/products.json?client_id=${route.params.id}`
 );
-console.log(products.value);
 
-// Filters orders between -3 to +3 weeks
 const week_in_milliseconds = 1000 * 60 * 60 * 24 * 7;
-// orders.value = orders.value.filter(
-//   (order) =>
-//     order.date >=
-//       (Math.floor(Date.now() / week_in_milliseconds) - 3) *
-//         week_in_milliseconds &&
-//     order.date <=
-//       (Math.floor(Date.now() / week_in_milliseconds) + 3) * week_in_milliseconds
-// );
-
 const currentOffset = ref(0);
 const now = new Date();
 function offsetWeek(n, date) {
@@ -33,6 +22,10 @@ const dateOptions = {
   day: "numeric",
   month: "numeric",
 };
+
+function saveOrders() {
+  console.log("saved orders");
+}
 </script>
 
 <template>
@@ -81,6 +74,12 @@ const dateOptions = {
         </div>
       </div>
       <data-table :offset="currentOffset" :products="products"></data-table>
+      <button
+        @click="saveOrders()"
+        class="bg-gray-500 justify-self-center text-white p-2 rounded hover:bg-gray-600"
+      >
+        Save Order
+      </button>
     </main>
     <footer>
       <h2>Instructions</h2>
@@ -118,7 +117,7 @@ main {
 }
 
 footer {
-  @apply bg-gray-300 p-8 grid gap-3;
+  @apply bg-gray-300 p-8 grid gap-3 rounded;
   h2 {
     @apply text-3xl;
   }

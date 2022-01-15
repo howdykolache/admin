@@ -5,6 +5,16 @@ const headers = {
   Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
 };
 
+const weekMap = {
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+  Sunday: 0,
+};
+
 export default async (req, res) => {
   const params = new URLSearchParams(req.url);
   const client_id = params.get("client_id");
@@ -33,7 +43,11 @@ export default async (req, res) => {
           });
         return {
           id: product.fields.id,
+          available_days: product.fields["Available Days"].map(
+            (day) => weekMap[day]
+          ),
           name: product.fields.Name,
+          lead_hours: product.fields["Lead Time (hrs)"],
           description: product.fields.Description,
           orders: productOrders,
         };
