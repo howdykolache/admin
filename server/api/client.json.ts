@@ -8,10 +8,8 @@ const headers = {
 export default async (req, res) => {
   const params = new URLSearchParams(req.url);
   const client_id = params.get("client_id");
-  const client = await fetch(
-    `https://api.airtable.com/v0/appl59VVNYe2k9Wim/Clients/${client_id}`,
-    { headers }
-  ).then((res) => res.json());
+  const url = `https://api.airtable.com/v0/appl59VVNYe2k9Wim/Clients/${client_id}`;
+  const client = await fetch(url, { headers }).then((res) => res.json());
   if (client) {
     return {
       name: client.fields.Name,

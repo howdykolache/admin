@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Welcome to the app.</h1>
-    <p>Goto /client_id</p>
+    <p>Goto /client/{client_id}</p>
   </div>
 </template>
 

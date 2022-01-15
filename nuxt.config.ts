@@ -1,9 +1,7 @@
-import { defineNuxtConfig } from 'nuxt3'
+import { defineNuxtConfig } from "nuxt3";
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  css: [
-    '@/assets/styles/global.css',
-    '@/assets/styles/reset.css'
-  ]
-})
+  buildModules: ["nuxt-windicss"],
+  css: ["@/assets/styles/global.css"],
+});

@@ -21,20 +21,10 @@ const weekMap = {
   6: "Sat",
   0: "Sun",
 };
-const week_in_milliseconds = 1000 * 60 * 24 * 7;
 
 // State //
 const props = defineProps(["orders"]);
-const { orders } = toRefs(props);
-
-// orders.value = orders.value.filter(
-//   (order) =>
-//     order.date >=
-//       Math.floor(Date.now() / week_in_milliseconds) * week_in_milliseconds &&
-//     order.date <=
-//       Math.floor(Date.now() / week_in_milliseconds) * week_in_milliseconds +
-//         week_in_milliseconds
-// );
+const { offset, orders } = toRefs(props);
 
 const products = computed(() => {
   const ps = [];
@@ -78,92 +68,70 @@ function add(acc, n) {
             <p>{{ product.description }}</p>
           </td>
           <td v-for="day of Object.keys(weekMap)">
-            <span class="order">{{
-              countOrdersByDay(day, getOrdersByProduct(product))
-            }}</span>
+            <span class="order">
+              {{ countOrdersByDay(day, getOrdersByProduct(product)) }}
+            </span>
           </td>
           <td>
-            <span class="order">{{
-              Object.keys(weekMap)
-                .map((day) =>
-                  countOrdersByDay(day, getOrdersByProduct(product))
-                )
-                .reduce(add, 0)
-            }}</span>
+            <span class="order">
+              {{
+                Object.keys(weekMap)
+                  .map((day) =>
+                    countOrdersByDay(day, getOrdersByProduct(product))
+                  )
+                  .reduce(add, 0)
+              }}
+            </span>
           </td>
         </tr>
       </tbody>
     </table>
-    <p>
-      <span class="label">Total:</span>
+    <p class="text-right">
+      <span class="font-light">Total:</span>
       {{ orders.map((order) => order.quantity).reduce(add, 0) }}
     </p>
   </div>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
 .wrapper {
-  display: grid;
-  grid-template-rows: repeat(2, auto);
-  gap: 1rem;
+  @apply grid grid-rows-[auto,auto] gap-5;
 }
 
-.wrapper > p {
-  text-align: right;
-}
-
-p .label {
-  font-weight: lighter;
-}
 thead {
-  border-bottom: 1px solid lightgray;
+  @apply border-b-1 border-gray-200;
+  th {
+    @apply uppercase text-gray-500 text-center border-l-1 border-gray-200 font-light;
+    &:first-child {
+      @apply border-l-0;
+    }
+  }
 }
 
 th,
 td {
-  padding: 0.3rem;
-}
-thead th {
-  color: gray;
-  text-align: center;
-  text-transform: uppercase;
-  border-left: 1px solid lightgray;
-  font-weight: lighter;
+  @apply p-1;
 }
 
-tbody p {
-  color: gray;
-  font-size: small;
-}
-
-thead th:first-child {
-  border-left: none;
-}
-
-tbody td {
-  border-left: 1px solid lightgray;
-}
-
-tbody td:first-child {
-  text-transform: capitalize;
-  border-left: none;
-  min-width: 20rem;
-}
-tbody tr {
-  border-top: 1px solid lightgray;
-}
-
-tbody tr:first-child {
-  border-top: none;
-}
-
-tbody td:not(:first-child) {
-  text-align: center;
-  padding: 1rem;
-}
-tbody td .order {
-  text-align: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid lightgray;
+tbody {
+  td {
+    @apply text-center border-l-1 border-gray-200 p-2;
+    &:first-child {
+      @apply text-left captalize border-l-0;
+    }
+    .order {
+      @apply text-center p-2 border-1 border-gray-200 w;
+      text-align: center;
+    }
+    p {
+      @apply text-sm text-gray-600 font-light;
+    }
+  }
+  tr {
+    @apply border-t-1 border-gray-200;
+    &:first-child {
+      @apply border-t-0;
+    }
+  }
 }
 </style>
