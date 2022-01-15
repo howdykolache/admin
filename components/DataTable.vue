@@ -24,73 +24,73 @@ const weekMap = {
 
 // State //
 const props = defineProps(["orders"]);
-const { offset, orders } = toRefs(props);
+const { offset, products } = toRefs(props);
 
-const products = computed(() => {
-  const ps = [];
+// const products = computed(() => {
+//   const ps = [];
 
-  for (let p of orders.value.map((order) => order.product)) {
-    if (!ps.some((product) => product.name === p.name)) {
-      ps.push(p);
-    }
-  }
-  return ps;
-});
+//   for (let p of orders.value.map((order) => order.product)) {
+//     if (!ps.some((product) => product.name === p.name)) {
+//       ps.push(p);
+//     }
+//   }
+//   return ps;
+// });
 
-// Methods //
-function getOrdersByProduct(product) {
-  return orders.value.filter((order) => order.product.name === product.name);
-}
+// // Methods //
+// function getOrdersByProduct(product) {
+//   return orders.value.filter((order) => order.product.name === product.name);
+// }
 
-function countOrdersByDay(day, orders) {
-  return orders
-    .filter((order) => new Date(order.date).getDay() === +day)
-    .reduce((sum, order) => sum + order.quantity, 0);
-}
+// function countOrdersByDay(day, orders) {
+//   return orders
+//     .filter((order) => new Date(order.date).getDay() === +day)
+//     .reduce((sum, order) => sum + order.quantity, 0);
+// }
 
-function add(acc, n) {
-  return acc + n;
-}
+// function add(acc, n) {
+//   return acc + n;
+// }
 </script>
 
 <template>
-  <div class="wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th v-for="header of headers">{{ header }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product of products" :key="product.name">
-          <td>
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
-          </td>
-          <td v-for="day of Object.keys(weekMap)">
-            <span class="order">
-              {{ countOrdersByDay(day, getOrdersByProduct(product)) }}
-            </span>
-          </td>
-          <td>
-            <span class="order">
-              {{
-                Object.keys(weekMap)
-                  .map((day) =>
-                    countOrdersByDay(day, getOrdersByProduct(product))
-                  )
-                  .reduce(add, 0)
-              }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="text-right">
-      <span class="font-light">Total:</span>
-      {{ orders.map((order) => order.quantity).reduce(add, 0) }}
-    </p>
-  </div>
+  <!-- <div class="wrapper"> -->
+  <!--   <table> -->
+  <!--     <thead> -->
+  <!--       <tr> -->
+  <!--         <th v-for="header of headers">{{ header }}</th> -->
+  <!--       </tr> -->
+  <!--     </thead> -->
+  <!--     <tbody> -->
+  <!--       <tr v-for="product of products" :key="product.name"> -->
+  <!--         <td> -->
+  <!--           <h3>{{ product.name }}</h3> -->
+  <!--           <p>{{ product.description }}</p> -->
+  <!--         </td> -->
+  <!--         <td v-for="day of Object.keys(weekMap)"> -->
+  <!--           <span class="order"> -->
+  <!--             {{ countOrdersByDay(day, getOrdersByProduct(product)) }} -->
+  <!--           </span> -->
+  <!--         </td> -->
+  <!--         <td> -->
+  <!--           <span class="order"> -->
+  <!--             {{ -->
+  <!--               Object.keys(weekMap) -->
+  <!--                 .map((day) => -->
+  <!--                   countOrdersByDay(day, getOrdersByProduct(product)) -->
+  <!--                 ) -->
+  <!--                 .reduce(add, 0) -->
+  <!--             }} -->
+  <!--           </span> -->
+  <!--         </td> -->
+  <!--       </tr> -->
+  <!--     </tbody> -->
+  <!--   </table> -->
+  <!--   <p class="text-right"> -->
+  <!--     <span class="font-light">Total:</span> -->
+  <!--     {{ orders.map((order) => order.quantity).reduce(add, 0) }} -->
+  <!--   </p> -->
+  <!-- </div> -->
 </template>
 
 <style lang="postcss" scoped>

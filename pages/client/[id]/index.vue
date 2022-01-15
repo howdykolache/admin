@@ -6,21 +6,22 @@ const { data: client } = await useFetch(
   `/api/client.json?client_id=${route.params.id}`
 );
 
-// Orders
-const { data: orders } = await useFetch(
-  `/api/orders.json?client_id=${route.params.id}`
+// Products
+const { data: products } = await useFetch(
+  `/api/products.json?client_id=${route.params.id}`
 );
+console.log(products.value);
 
 // Filters orders between -3 to +3 weeks
 const week_in_milliseconds = 1000 * 60 * 60 * 24 * 7;
-orders.value = orders.value.filter(
-  (order) =>
-    order.date >=
-      (Math.floor(Date.now() / week_in_milliseconds) - 3) *
-        week_in_milliseconds &&
-    order.date <=
-      (Math.floor(Date.now() / week_in_milliseconds) + 3) * week_in_milliseconds
-);
+// orders.value = orders.value.filter(
+//   (order) =>
+//     order.date >=
+//       (Math.floor(Date.now() / week_in_milliseconds) - 3) *
+//         week_in_milliseconds &&
+//     order.date <=
+//       (Math.floor(Date.now() / week_in_milliseconds) + 3) * week_in_milliseconds
+// );
 
 const currentOffset = ref(0);
 const now = new Date();
@@ -79,7 +80,7 @@ const dateOptions = {
           </ul>
         </div>
       </div>
-      <data-table :offset="currentOffset" :orders="orders"></data-table>
+      <data-table :offset="currentOffset" :products="products"></data-table>
     </main>
     <footer>
       <h2>Instructions</h2>
